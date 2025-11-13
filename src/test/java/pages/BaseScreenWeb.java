@@ -39,6 +39,8 @@ public class BaseScreenWeb {
         }
     }
 
+
+
     protected void switchToWindow() {
         String original = driver.getWindowHandle();
         new WebDriverWait(driver, Duration.ofSeconds(10))

@@ -5,32 +5,15 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.testng.Reporter;
-import utilities.ConfigReader;
-import utilities.ExcelUtil;
 import utilities.ThreadLocalDriver;
 
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.List;
 
 public class DataValidationStepDefinitions extends BaseSteps{
 
-    boolean mobile = Reporter.getCurrentTestResult().getTestContext().getCurrentXmlTest().getParameter("WebOrMobile").equalsIgnoreCase("Mobile");
-    boolean webCloud = Reporter.getCurrentTestResult().getTestContext().getCurrentXmlTest().getParameter("WebOrMobile").equalsIgnoreCase("WebCloud");
-
     @Before
     public void setupLoginSteps() {
-        if (mobile) {
-            //mobile code - for both cloud/local
-            setupScreensMobile(ThreadLocalDriver.getAppiumDriverThreadLocal());
-        } else if (webCloud) {
-            //web code - for cloud
-            setupScreensWebCloud(ThreadLocalDriver.getRemoteWebDriverThreadLocal());
-        } else {
-            //web code - for local
             setupScreensWebLocal(ThreadLocalDriver.getWebDriverThreadLocal());
-        }
     }
 
     @Given("user is navigated to registration page")
@@ -53,7 +36,7 @@ public class DataValidationStepDefinitions extends BaseSteps{
     }
 
     @When("user searches with {string}")
-    public void userSearchesWith(String columnHeader) throws IOException {
+    public void userSearchesWith(String columnHeader) throws IOException, InterruptedException {
         dataValidationPage.searchAndVerifyProducts(columnHeader);
     }
 

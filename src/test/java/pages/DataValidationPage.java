@@ -2,6 +2,8 @@ package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import utilities.ConfigReader;
 import utilities.ExcelUtil;
@@ -9,6 +11,7 @@ import utilities.ExcelUtil;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.Duration;
 import java.util.List;
 
 public class DataValidationPage extends BaseScreenWeb {
@@ -103,12 +106,17 @@ public class DataValidationPage extends BaseScreenWeb {
     waitAndClick(allRegistrationsLink);
   }
 
-  public void enterSearchInRegistrations(String searchText) {
+  public void enterSearchInRegistrations(String searchText) throws InterruptedException {
     waitAndSendKeys(searchButtonRegistrations, searchText);
+    if(driver.findElement(searchButtonRegistrations).getAttribute("value").equals(searchText)){
+        System.out.println("Search text entered: " + searchText);
+        } else {
+        System.out.println("Failed to enter search text: " + searchText);
+    }
   }
 
   public boolean verifyProduct(String productName) {
-    if(waitAndVerify(getProductByName(productName))){
+    if(waitAndVerifyProduct(getProductByName(productName))){
       System.out.println("Product found: " + productName);
       return true;
         } else {
@@ -117,11 +125,21 @@ public class DataValidationPage extends BaseScreenWeb {
     }
   }
 
+  protected boolean waitAndVerifyProduct(By by) {
+    WebDriverWait wait2 = new WebDriverWait(driver, Duration.ofSeconds(10));
+    System.out.println("Verifying visibility of element: '" + by+ "'");
+    try {
+      return wait2.until(ExpectedConditions.visibilityOfElementLocated(by)).isDisplayed();
+    } catch (Exception e){
+      return false;
+    }
+  }
+
   public void clearsearchBox() {
     driver.findElement(searchButtonRegistrations).clear();
   }
 
-  public void searchAndVerifyProducts(String columnHeader) throws IOException {
+  public void searchAndVerifyProducts(String columnHeader) throws IOException, InterruptedException {
     Path excelPath = Paths.get(System.getProperty("user.dir"),"\\src\\test\\resources\\excelfiles\\"+ ConfigReader.get("fileName"));
     ExcelUtil excel = new ExcelUtil(excelPath);
     columnValues = excel.getColumn(ConfigReader.get("sheetName"), columnHeader);
@@ -141,7 +159,7 @@ public class DataValidationPage extends BaseScreenWeb {
       clearsearchBox();
       System.out.println(c);
       count++;
-//      if(count>10) break;
+      if(count>25) break;
       System.out.println("Number of records searched so far: "+count);
     }
   }
