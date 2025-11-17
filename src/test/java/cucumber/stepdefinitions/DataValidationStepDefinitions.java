@@ -43,4 +43,10 @@ public class DataValidationStepDefinitions extends BaseSteps{
     @Then("data should be displayed correctly")
     public void dataShouldBeDisplayedCorrectly() {
     }
+
+    @When("user searches with {string} {string}")
+    public void userSearchesWith(String columnName, String rowNumber) throws IOException, InterruptedException {
+        dataValidationPage.searchAndVerifySpecificData();
+
+    }
 }
