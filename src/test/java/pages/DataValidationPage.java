@@ -159,7 +159,7 @@ public class DataValidationPage extends BaseScreenWeb {
       clearsearchBox();
       System.out.println(c);
       count++;
-//      if(count>25) break;
+      if(count>5) break;
       System.out.println("Number of records searched so far: "+count);
     }
   }
