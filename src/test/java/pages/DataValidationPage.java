@@ -6,6 +6,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import utilities.ConfigReader;
+import utilities.ExcelReader;
 import utilities.ExcelUtil;
 
 import java.io.IOException;
@@ -15,152 +16,217 @@ import java.time.Duration;
 import java.util.List;
 
 public class DataValidationPage extends BaseScreenWeb {
-  public DataValidationPage(WebDriver driver) {super(driver);}
-  private List<String> columnValues;
+    public DataValidationPage(WebDriver driver) {
+        super(driver);
+    }
 
-  /**
-   * Web Elements
-   */
-  By loginButton = By.xpath("//img[@alt=\"Login with Azure\"]");
-  By emailInputBox = By.xpath("//input[@type=\"email\"]");
-  By nextButton = By.xpath("//input[@value=\"Next\"]");
-  By passwordInputBox = By.xpath("//input[@type=\"password\"]");
-  By signInButton = By.xpath("//input[@value='Sign in']");
-  By yesButton = By.xpath("//input[@value=\"Yes\"]");
-  By searchButton = By.xpath("(//button[@type=\"button\" and @class=\"table-action mr-3\"])[2]");
-  By authTab = By.xpath("//span[text()='Auth']");
-  By loginReasonInputBox = By.xpath("//input[@placeholder=\"I need to login because ...\"]");
-  By adminstratorButton = By.xpath("(//span[@class=\"absolute inset-0\" and @aria-hidden=\"true\"])[1]");
-  By gridIcon = By.xpath("//span[@class=\"p-0.5 w-5 h-5 grid grid-cols-3 grid-rows-3 gap-0.5\"]");
-  By allRegistrationsLink = By.xpath("//a[contains(text(),'All Registrations')]");
-  By searchButtonRegistrations = By.xpath("//input[@id=\"search\"]");
-  public By companyDiv(String companyName) {
-    return By.xpath("//div[@title='" + companyName + "']");
-  }
-  public By getProductByName(String deviceName) {
-    return By.xpath("//span[contains(text(),'" + deviceName + "')]");
-  }
+    private List<String> columnValues;
+    Path excelPath = Paths.get(System.getProperty("user.dir"), "\\src\\test\\resources\\excelfiles\\" + ConfigReader.get("fileName"));
+    ExcelReader excel = new ExcelReader(excelPath);
+    Path excelPath2 = Paths.get(System.getProperty("user.dir"), "\\src\\test\\resources\\excelfiles\\" + ConfigReader.get("fileName2"));
+    ExcelReader excel2 = new ExcelReader(excelPath2);
+
+    String sheetName = ConfigReader.get("sheetName");
 
 
-  /**
-   * Actions
-   */
-  public void launchURL() {
-    String onlineUrl = ConfigReader.get("OnlineUrl");
-    driver.manage().window().maximize();
-    driver.get(onlineUrl);
-    System.out.println("Navigated to URL: " + onlineUrl);
+    /**
+     * Web Elements
+     */
+    By loginButton = By.xpath("//img[@alt=\"Login with Azure\"]");
+    By emailInputBox = By.xpath("//input[@type=\"email\"]");
+    By nextButton = By.xpath("//input[@value=\"Next\"]");
+    By passwordInputBox = By.xpath("//input[@type=\"password\"]");
+    By signInButton = By.xpath("//input[@value='Sign in']");
+    By yesButton = By.xpath("//input[@value=\"Yes\"]");
+    By searchButton = By.xpath("(//button[@type=\"button\" and @class=\"table-action mr-3\"])[2]");
+    By authTab = By.xpath("//span[text()='Auth']");
+    By loginReasonInputBox = By.xpath("//input[@placeholder=\"I need to login because ...\"]");
+    By adminstratorButton = By.xpath("(//span[@class=\"absolute inset-0\" and @aria-hidden=\"true\"])[1]");
+    By gridIcon = By.xpath("//span[@class=\"p-0.5 w-5 h-5 grid grid-cols-3 grid-rows-3 gap-0.5\"]");
+    By allRegistrationsLink = By.xpath("//a[contains(text(),'All Registrations')]");
+    By searchButtonRegistrations = By.xpath("//input[@id=\"search\"]");
+
+    public By companyDiv(String companyName) {
+        return By.xpath("//div[@title='" + companyName + "']");
+    }
+
+    public By getProductByName(String deviceName) {
+        return By.xpath("//span[contains(text(),'" + deviceName + "')]");
+    }
+
+    public By getRegistrationNumber(String productName) {
+        return By.xpath("//span[contains(text(),'" + productName + "')]/../..//span[contains(text(),'REG')]");
+    }
+
+    By getRegistrationName = By.xpath("//input[@aria-label='Name' and @type='text']");
+
+    By getOwnerName = By.xpath("//label[text()='Owner']/../..//span[@class=\"flex items-center\"]");
+    By getRegistrationStatus = By.xpath("//label[text()='Lifecycle Stage']/../..//span[@class=\"flex items-center\"]");
+    By getStartDate = By.xpath("//label[text()='Start Date']/../..//input[@placeholder=\"YYYY-MM-DD\" and @type=\"text\"]");
+    By getRegistrationsLink = By.xpath("//a[contains(text(),'Registrations')]");
+
+    /**
+     * Actions
+     */
+    public void launchURL() {
+        String onlineUrl = ConfigReader.get("OnlineUrl");
+        driver.manage().window().maximize();
+        driver.get(onlineUrl);
+        System.out.println("Navigated to URL: " + onlineUrl);
 //      test.get().log(Status.INFO, "Home Page", MediaEntityBuilder.createScreenCaptureFromBase64String(takeScreenshotAsBase64WebLocal()).build());
-  }
+    }
 
-  public void clickLoginButton() {
-    waitAndClick(loginButton);
-  }
+    public void clickLoginButton() {
+        waitAndClick(loginButton);
+    }
 
-  public void enterEmail(String email) {
-    waitAndSendKeys(emailInputBox, email);
-  }
+    public void enterEmail(String email) {
+        waitAndSendKeys(emailInputBox, email);
+    }
 
-  public void clickNextButton() {
-    waitAndClick(nextButton);
-  }
+    public void clickNextButton() {
+        waitAndClick(nextButton);
+    }
 
-  public void enterPassword(String password) {
-    waitAndSendKeys(passwordInputBox, password);
-  }
+    public void enterPassword(String password) {
+        waitAndSendKeys(passwordInputBox, password);
+    }
 
-  public void clickSignInButton() {
-    waitAndClick(signInButton);
-  }
+    public void clickSignInButton() {
+        waitAndClick(signInButton);
+    }
 
-  public void clickYesButton() {
-    waitAndClick(yesButton);
-  }
+    public void clickYesButton() {
+        waitAndClick(yesButton);
+    }
 
-  public void clickCompany(String companyName) {
-    waitAndClick(companyDiv(companyName));
-  }
+    public void clickCompany(String companyName) {
+        waitAndClick(companyDiv(companyName));
+    }
 
-  public void clickSearchButton() {
-    waitAndClick(searchButton);
-  }
+    public void clickSearchButton() {
+        waitAndClick(searchButton);
+    }
 
-  public void clickAuthTab() {
-    waitAndClick(authTab);
-  }
+    public void clickAuthTab() {
+        waitAndClick(authTab);
+    }
 
-  public void enterLoginReason(String reason) {
-    waitAndSendKeys(loginReasonInputBox, reason);
-  }
+    public void enterLoginReason(String reason) {
+        waitAndSendKeys(loginReasonInputBox, reason);
+    }
 
-  public void clickAdministratorButton() {
-    waitAndClick(adminstratorButton);
-    switchToWindow();
-  }
+    public void clickAdministratorButton() {
+        waitAndClick(adminstratorButton);
+        switchToWindow();
+    }
 
-  public void clickGridIcon() {
-    waitAndClick(gridIcon);
-  }
+    public void clickGridIcon() {
+        waitAndClick(gridIcon);
+    }
 
-  public void clickAllRegistrationsLink() {
-    waitAndClick(allRegistrationsLink);
-  }
+    public void clickAllRegistrationsLink() {
+        waitAndClick(allRegistrationsLink);
+    }
 
-  public void enterSearchInRegistrations(String searchText) throws InterruptedException {
-    waitAndSendKeys(searchButtonRegistrations, searchText);
-    if(driver.findElement(searchButtonRegistrations).getAttribute("value").equals(searchText)){
-        System.out.println("Search text entered: " + searchText);
+    public void enterSearchInRegistrations(String searchText) throws InterruptedException {
+        waitAndSendKeys(searchButtonRegistrations, searchText);
+        if (driver.findElement(searchButtonRegistrations).getAttribute("value").equals(searchText)) {
+            System.out.println("Search text entered: " + searchText);
         } else {
-        System.out.println("Failed to enter search text: " + searchText);
+            System.out.println("Failed to enter search text: " + searchText);
+        }
     }
-  }
 
-  public boolean verifyProduct(String productName) {
-    if(waitAndVerifyProduct(getProductByName(productName))){
-      System.out.println("Product found: " + productName);
-      return true;
+    public boolean verifyProduct(String productName) {
+        if (waitAndVerify(getProductByName(productName))) {
+            System.out.println("Product found: " + productName);
+            return true;
         } else {
-      System.out.println("Product not found: " + productName);
-      return false;
+            System.out.println("Product not found: " + productName);
+            return false;
+        }
     }
-  }
 
-  protected boolean waitAndVerifyProduct(By by) {
-    WebDriverWait wait2 = new WebDriverWait(driver, Duration.ofSeconds(10));
-    System.out.println("Verifying visibility of element: '" + by+ "'");
-    try {
-      return wait2.until(ExpectedConditions.visibilityOfElementLocated(by)).isDisplayed();
-    } catch (Exception e){
-      return false;
+    protected boolean waitAndVerifyProduct(By by) {
+        WebDriverWait wait2 = new WebDriverWait(driver, Duration.ofSeconds(30));
+        System.out.println("Verifying visibility of element: '" + by + "'");
+        try {
+            return wait2.until(ExpectedConditions.visibilityOfElementLocated(by)).isDisplayed();
+        } catch (Exception e) {
+            return false;
+        }
     }
-  }
 
-  public void clearsearchBox() {
-    driver.findElement(searchButtonRegistrations).clear();
-  }
-
-  public void searchAndVerifyProducts(String columnHeader) throws IOException, InterruptedException {
-    Path excelPath = Paths.get(System.getProperty("user.dir"),"\\src\\test\\resources\\excelfiles\\"+ ConfigReader.get("fileName"));
-    ExcelUtil excel = new ExcelUtil(excelPath);
-    columnValues = excel.getColumn(ConfigReader.get("sheetName"), columnHeader);
-    Path excelPath2 = Paths.get(System.getProperty("user.dir"),"\\src\\test\\resources\\excelfiles\\"+ ConfigReader.get("fileName2"));
-    ExcelUtil excel2 = new ExcelUtil(excelPath2);
-    columnValues = excel2.getColumn(ConfigReader.get("sheetName"), columnHeader);
-
-    int count=0;
-    for (String c : columnValues){
-      enterSearchInRegistrations(c);
-      boolean ok = verifyProduct(c);
-      if (ok) {
-        excel2.markCellGreen(ConfigReader.get("sheetName"), columnHeader, c);
-      } else {
-        excel2.markCellRed(ConfigReader.get("sheetName"), columnHeader, c);
-      }
-      clearsearchBox();
-      System.out.println(c);
-      count++;
-      if(count>2) break;
-      System.out.println("Number of records searched so far: "+count);
+    public void clearsearchBox() {
+        driver.findElement(searchButtonRegistrations).clear();
     }
-  }
+
+    public void searchAndVerifyProducts(String columnHeader) throws IOException, InterruptedException {
+        Path excelPath = Paths.get(System.getProperty("user.dir"), "\\src\\test\\resources\\excelfiles\\" + ConfigReader.get("fileName"));
+        ExcelUtil excel = new ExcelUtil(excelPath);
+        columnValues = excel.getColumn(ConfigReader.get("sheetName"), columnHeader);
+        Path excelPath2 = Paths.get(System.getProperty("user.dir"), "\\src\\test\\resources\\excelfiles\\" + ConfigReader.get("fileName2"));
+        ExcelUtil excel2 = new ExcelUtil(excelPath2);
+        columnValues = excel2.getColumn(ConfigReader.get("sheetName"), columnHeader);
+
+        int count = 0;
+        for (String c : columnValues) {
+            enterSearchInRegistrations(c);
+            boolean ok = verifyProduct(c);
+            if (ok) {
+                excel2.markCellGreen(ConfigReader.get("sheetName"), columnHeader, c);
+                // click on reg no
+                waitAndClick(getRegistrationNumber(c));
+                // validate Registration name
+//        if(driver.findElement(getRegistrationName).getAttribute("value").equals())
+            } else {
+                excel2.markCellRed(ConfigReader.get("sheetName"), columnHeader, c);
+            }
+            clearsearchBox();
+            System.out.println(c);
+            count++;
+            if (count > 10) break;
+            System.out.println("Number of records searched so far: " + count);
+        }
+    }
+
+    public void searchAndVerifySpecificData() throws IOException, InterruptedException {
+        int totalRows = excel.getTotalRows(sheetName);
+        for (int r = 1; r <= 10; r++) {
+            String productNameValue = excel.getCellValue(sheetName, "Product Name", r);
+            System.out.println(productNameValue);
+            enterSearchInRegistrations(productNameValue);
+            boolean ok = verifyProduct(productNameValue);
+            if (ok) {
+                excel2.markCellGreen(sheetName, "Product Name", r);
+                // click on reg no
+                waitAndClick(getRegistrationNumber(productNameValue));
+                Thread.sleep(30000);
+                // validate Registration name
+                String registrationNameValue = excel.getCellValue(sheetName, "Registration Name*", r);
+                if (driver.findElement(getRegistrationName).getAttribute("value").equals(registrationNameValue)) {
+                    System.out.println("Registration Name: '" + registrationNameValue + "' matches for product: '" + productNameValue + " '");
+                    excel2.markCellGreen(sheetName, "Registration Name*", r);
+                } else {
+                    System.out.println("Registration Name: '" + registrationNameValue + "' doesnt matches for product: '" + productNameValue + " '");
+                    excel2.markCellRed(sheetName, "Registration Name*", r);
+                }
+                //validate owner
+                String ownerNameValue = excel.getCellValue(sheetName, "Owner*", r);
+                if (driver.findElement(getOwnerName).getText().equals(ownerNameValue)) {
+                    System.out.println("Owner Name: '" + ownerNameValue + "' matches for product: '" + productNameValue + " '");
+                    excel2.markCellGreen(sheetName, "Owner*", r);
+                } else {
+                    System.out.println("Owner Name: '" + ownerNameValue + "' doesnt matches for product: '" + productNameValue + " '");
+                    excel2.markCellRed(sheetName, "Owner*", r);
+                }
+                waitAndClick(getRegistrationsLink);
+                clearsearchBox();
+            } else {
+                excel2.markCellRed(sheetName, "Product Name", r);
+                clearsearchBox();
+            }
+        }
+    }
 }

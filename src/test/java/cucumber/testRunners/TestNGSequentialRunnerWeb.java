@@ -21,7 +21,7 @@ import java.net.URL;
  */
 @CucumberOptions(
         monochrome = true,
-        tags = "@excel",
+        tags = "@excel2",
         features = "src/test/resources/features",
         glue = "cucumber.stepdefinitions",
         publish = false,
