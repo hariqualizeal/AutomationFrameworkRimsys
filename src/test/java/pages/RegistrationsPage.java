@@ -66,11 +66,12 @@ public class RegistrationsPage extends BaseScreenWeb {
     /**
      * Actions
      */
-    public void launchURL() {
+    public void launchURL() throws InterruptedException {
         String onlineUrl = ConfigReader.get("OnlineUrl");
         driver.manage().window().maximize();
         driver.get(onlineUrl);
         System.out.println("Navigated to URL: " + onlineUrl);
+        Thread.sleep(5000);
 //      test.get().log(Status.INFO, "Home Page", MediaEntityBuilder.createScreenCaptureFromBase64String(takeScreenshotAsBase64WebLocal()).build());
     }
 

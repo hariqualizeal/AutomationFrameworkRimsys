@@ -17,7 +17,6 @@ public class RegistrationsStepDefinitions extends BaseSteps{
     @Given("user is navigated to registration page")
     public void userIsNavigatedToRegistrationPage() throws InterruptedException {
         registrationsPage.launchURL();
-        Thread.sleep(5000);
         registrationsPage.clickLoginButton();
         registrationsPage.enterEmail("santosh.mangalapalli@rimsys.io");
         registrationsPage.clickNextButton();
