@@ -7,9 +7,9 @@ import pages.*;
  * this class is used to initialize page classes with driver.
  */
 public class BaseSteps {
-    protected Registrations registrations;
+    protected RegistrationsPage registrationsPage;
 
     public void setupScreensWebLocal(WebDriver driver) {
-        registrations = new Registrations(driver);
+        registrationsPage = new RegistrationsPage(driver);
     }
 }

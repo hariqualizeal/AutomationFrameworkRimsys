@@ -3,7 +3,6 @@ package cucumber.stepdefinitions;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
-import io.cucumber.java.en.When;
 import utilities.ThreadLocalDriver;
 
 import java.io.IOException;
@@ -17,25 +16,25 @@ public class RegistrationsStepDefinitions extends BaseSteps{
 
     @Given("user is navigated to registration page")
     public void userIsNavigatedToRegistrationPage() throws InterruptedException {
-        registrations.launchURL();
+        registrationsPage.launchURL();
         Thread.sleep(5000);
-        registrations.clickLoginButton();
-        registrations.enterEmail("santosh.mangalapalli@rimsys.io");
-        registrations.clickNextButton();
-        registrations.enterPassword("@Pple1726");
-        registrations.clickSignInButton();
-        registrations.clickYesButton();
-        registrations.clickCompany("Philips");
-        registrations.clickSearchButton();
-        registrations.clickAuthTab();
-        registrations.enterLoginReason("test");
-        registrations.clickAdministratorButton();
-        registrations.clickGridIcon();
-        registrations.clickAllRegistrationsLink();
+        registrationsPage.clickLoginButton();
+        registrationsPage.enterEmail("santosh.mangalapalli@rimsys.io");
+        registrationsPage.clickNextButton();
+        registrationsPage.enterPassword("@Pple1726");
+        registrationsPage.clickSignInButton();
+        registrationsPage.clickYesButton();
+        registrationsPage.clickCompany("Philips");
+        registrationsPage.clickSearchButton();
+        registrationsPage.clickAuthTab();
+        registrationsPage.enterLoginReason("test");
+        registrationsPage.clickAdministratorButton();
+        registrationsPage.clickGridIcon();
+        registrationsPage.clickAllRegistrationsLink();
     }
 
     @Then("user validates the registration details")
     public void userValidatesTheRegistrationDetails() throws IOException, InterruptedException {
-        registrations.searchAndVerifySpecificData();
+        registrationsPage.searchAndVerifySpecificData();
     }
 }

@@ -13,8 +13,8 @@ import java.nio.file.Paths;
 import java.time.Duration;
 import java.util.List;
 
-public class Registrations extends BaseScreenWeb {
-    public Registrations(WebDriver driver) {
+public class RegistrationsPage extends BaseScreenWeb {
+    public RegistrationsPage(WebDriver driver) {
         super(driver);
     }
 
@@ -40,7 +40,7 @@ public class Registrations extends BaseScreenWeb {
     By authTab = By.xpath("//span[text()='Auth']");
     By loginReasonInputBox = By.xpath("//input[@placeholder=\"I need to login because ...\"]");
     By adminstratorButton = By.xpath("(//span[@class=\"absolute inset-0\" and @aria-hidden=\"true\"])[1]");
-    By gridIcon = By.xpath("//span[@class=\"p-0.5 w-5 h-5 grid grid-cols-3 grid-rows-3 gap-0.5\"]");
+    By gridIcon = By.xpath("//span[@class='p-0.5 w-5 h-5 grid grid-cols-3 grid-rows-3 gap-0.5']");
     By allRegistrationsLink = By.xpath("//a[contains(text(),'All Registrations')]");
     By searchButtonRegistrations = By.xpath("//input[@id=\"search\"]");
 
