@@ -111,8 +111,8 @@ public class RegistrationsPage extends BaseScreenWeb {
         waitAndClick(authTab);
     }
 
-    public void enterLoginReason(String reason) {
-        waitAndSendKeys(loginReasonInputBox, reason);
+    public void enterLoginReason() {
+        waitAndSendKeys(loginReasonInputBox, "test");
     }
 
     public void clickAdministratorButton() {
@@ -192,7 +192,7 @@ public class RegistrationsPage extends BaseScreenWeb {
             System.out.println("Registration Name: '" + registrationNameValue + "' matches for product");
             excel2.markCellGreen(sheetName, "Registration Name*", r);
         } else {
-            System.out.println("Registration Name: '" + registrationNameValue + "' doesnt matches for product");
+            System.out.println("Registration Name: '" + registrationNameValue + "' doesn't matches for product");
             excel2.markCellRed(sheetName, "Registration Name*", r);
         }
     }
