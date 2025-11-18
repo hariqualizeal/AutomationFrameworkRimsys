@@ -4,10 +4,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
 import utilities.ConfigReader;
 import utilities.ExcelReader;
-import utilities.ExcelUtil;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -15,8 +13,8 @@ import java.nio.file.Paths;
 import java.time.Duration;
 import java.util.List;
 
-public class DataValidationPage extends BaseScreenWeb {
-    public DataValidationPage(WebDriver driver) {
+public class Registrations extends BaseScreenWeb {
+    public Registrations(WebDriver driver) {
         super(driver);
     }
 
@@ -159,36 +157,8 @@ public class DataValidationPage extends BaseScreenWeb {
     }
 
     public void clearsearchBox() {
+        waitAndVerify(searchButtonRegistrations);
         driver.findElement(searchButtonRegistrations).clear();
-    }
-
-    public void searchAndVerifyProducts(String columnHeader) throws IOException, InterruptedException {
-        Path excelPath = Paths.get(System.getProperty("user.dir"), "\\src\\test\\resources\\excelfiles\\" + ConfigReader.get("fileName"));
-        ExcelUtil excel = new ExcelUtil(excelPath);
-        columnValues = excel.getColumn(ConfigReader.get("sheetName"), columnHeader);
-        Path excelPath2 = Paths.get(System.getProperty("user.dir"), "\\src\\test\\resources\\excelfiles\\" + ConfigReader.get("fileName2"));
-        ExcelUtil excel2 = new ExcelUtil(excelPath2);
-        columnValues = excel2.getColumn(ConfigReader.get("sheetName"), columnHeader);
-
-        int count = 0;
-        for (String c : columnValues) {
-            enterSearchInRegistrations(c);
-            boolean ok = verifyProduct(c);
-            if (ok) {
-                excel2.markCellGreen(ConfigReader.get("sheetName"), columnHeader, c);
-                // click on reg no
-                waitAndClick(getRegistrationNumber(c));
-                // validate Registration name
-//        if(driver.findElement(getRegistrationName).getAttribute("value").equals())
-            } else {
-                excel2.markCellRed(ConfigReader.get("sheetName"), columnHeader, c);
-            }
-            clearsearchBox();
-            System.out.println(c);
-            count++;
-            if (count > 10) break;
-            System.out.println("Number of records searched so far: " + count);
-        }
     }
 
     public void searchAndVerifySpecificData() throws IOException, InterruptedException {
@@ -200,33 +170,62 @@ public class DataValidationPage extends BaseScreenWeb {
             boolean ok = verifyProduct(productNameValue);
             if (ok) {
                 excel2.markCellGreen(sheetName, "Product Name", r);
-                // click on reg no
                 waitAndClick(getRegistrationNumber(productNameValue));
-                Thread.sleep(30000);
-                // validate Registration name
-                String registrationNameValue = excel.getCellValue(sheetName, "Registration Name*", r);
-                if (driver.findElement(getRegistrationName).getAttribute("value").equals(registrationNameValue)) {
-                    System.out.println("Registration Name: '" + registrationNameValue + "' matches for product: '" + productNameValue + " '");
-                    excel2.markCellGreen(sheetName, "Registration Name*", r);
-                } else {
-                    System.out.println("Registration Name: '" + registrationNameValue + "' doesnt matches for product: '" + productNameValue + " '");
-                    excel2.markCellRed(sheetName, "Registration Name*", r);
-                }
-                //validate owner
-                String ownerNameValue = excel.getCellValue(sheetName, "Owner*", r);
-                if (driver.findElement(getOwnerName).getText().equals(ownerNameValue)) {
-                    System.out.println("Owner Name: '" + ownerNameValue + "' matches for product: '" + productNameValue + " '");
-                    excel2.markCellGreen(sheetName, "Owner*", r);
-                } else {
-                    System.out.println("Owner Name: '" + ownerNameValue + "' doesnt matches for product: '" + productNameValue + " '");
-                    excel2.markCellRed(sheetName, "Owner*", r);
-                }
+                waitAndVerify(getRegistrationName);
+                validateRegistrationName(r);
+                validateOwnerName(r);
+                validateRegistrationStatus(r);
+                validateStartDate(r);
                 waitAndClick(getRegistrationsLink);
                 clearsearchBox();
             } else {
                 excel2.markCellRed(sheetName, "Product Name", r);
                 clearsearchBox();
             }
+        }
+    }
+
+    public void validateRegistrationName(int r) throws IOException {
+        String registrationNameValue = excel.getCellValue(sheetName, "Registration Name*", r);
+        if (driver.findElement(getRegistrationName).getAttribute("value").equals(registrationNameValue)) {
+            System.out.println("Registration Name: '" + registrationNameValue + "' matches for product");
+            excel2.markCellGreen(sheetName, "Registration Name*", r);
+        } else {
+            System.out.println("Registration Name: '" + registrationNameValue + "' doesnt matches for product");
+            excel2.markCellRed(sheetName, "Registration Name*", r);
+        }
+    }
+
+    public void validateOwnerName(int r) throws IOException {
+        String ownerNameValue = excel.getCellValue(sheetName, "Owner*", r);
+        if (driver.findElement(getOwnerName).getText().equals(ownerNameValue)) {
+            System.out.println("Owner Name: '" + ownerNameValue + "' matches for product");
+            excel2.markCellGreen(sheetName, "Owner*", r);
+        } else {
+            System.out.println("Owner Name: '" + ownerNameValue + "' doesnt matches for product");
+            excel2.markCellRed(sheetName, "Owner*", r);
+        }
+    }
+
+    public void validateRegistrationStatus(int r) throws IOException {
+        String registrationStatus = excel.getCellValue(sheetName, "Registration Status", r);
+        if (driver.findElement(getRegistrationStatus).getText().equals(registrationStatus)) {
+            System.out.println("Owner Name: '" + registrationStatus + "' matches for product");
+            excel2.markCellGreen(sheetName, "Registration Status", r);
+        } else {
+            System.out.println("Owner Name: '" + registrationStatus + "' doesnt matches for product");
+            excel2.markCellRed(sheetName, "Registration Status", r);
+        }
+    }
+
+    public void validateStartDate(int r) throws IOException {
+        String startDate = excel.getCellValue(sheetName, "Start Date (YYYY-MM-DD)*", r);
+        if (driver.findElement(getStartDate).getAttribute("value").equals(startDate)) {
+            System.out.println("start date: '" + startDate + "' matches for product");
+            excel2.markCellGreen(sheetName, "Start Date (YYYY-MM-DD)*", r);
+        } else {
+            System.out.println("start date: '" + startDate + "' doesn't matches for product");
+            excel2.markCellRed(sheetName, "Start Date (YYYY-MM-DD)*", r);
         }
     }
 }
