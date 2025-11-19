@@ -18,10 +18,9 @@ public class RegistrationsPage extends BaseScreenWeb {
         super(driver);
     }
 
-    private List<String> columnValues;
-    Path excelPath = Paths.get(System.getProperty("user.dir"), "\\src\\test\\resources\\excelfiles\\" + ConfigReader.get("inputFileName"));
+    Path excelPath = Paths.get(System.getProperty("user.dir"), "\\src\\test\\resources\\excelfiles\\" + ConfigReader.get("inputFileName")+".xlsx");
     ExcelReader excel = new ExcelReader(excelPath);
-    Path excelPath2 = Paths.get(System.getProperty("user.dir"), "\\src\\test\\resources\\excelfiles\\" + ConfigReader.get("outputFileName1"));
+    Path excelPath2 = Paths.get(System.getProperty("user.dir"), "\\src\\test\\resources\\excelfiles\\" + ConfigReader.get("outputFileName1")+".xlsx");
     ExcelReader excel2 = new ExcelReader(excelPath2);
 
     String sheetName = ConfigReader.get("sheetName");
@@ -232,8 +231,8 @@ public class RegistrationsPage extends BaseScreenWeb {
 
     public void copyFile() throws IOException {
         ExcelReader.copyExcelFile(
-                Paths.get(System.getProperty("user.dir"), "\\src\\test\\resources\\excelfiles\\" + ConfigReader.get("inputFileName")),
-                Paths.get(System.getProperty("user.dir"), "\\src\\test\\resources\\excelfiles\\" + ConfigReader.get("outputFileName1"))
+                Paths.get(System.getProperty("user.dir"), "\\src\\test\\resources\\excelfiles\\" + ConfigReader.get("inputFileName")+".xlsx"),
+                Paths.get(System.getProperty("user.dir"), "\\src\\test\\resources\\excelfiles\\" + ConfigReader.get("outputFileName1")+".xlsx")
         );
         System.out.println("Copied input file to output file successfully.");
     }
