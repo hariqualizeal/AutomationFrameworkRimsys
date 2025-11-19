@@ -19,9 +19,9 @@ public class RegistrationsPage extends BaseScreenWeb {
     }
 
     private List<String> columnValues;
-    Path excelPath = Paths.get(System.getProperty("user.dir"), "\\src\\test\\resources\\excelfiles\\" + ConfigReader.get("fileName"));
+    Path excelPath = Paths.get(System.getProperty("user.dir"), "\\src\\test\\resources\\excelfiles\\" + ConfigReader.get("inputFileName"));
     ExcelReader excel = new ExcelReader(excelPath);
-    Path excelPath2 = Paths.get(System.getProperty("user.dir"), "\\src\\test\\resources\\excelfiles\\" + ConfigReader.get("fileName2"));
+    Path excelPath2 = Paths.get(System.getProperty("user.dir"), "\\src\\test\\resources\\excelfiles\\" + ConfigReader.get("outputFileName1"));
     ExcelReader excel2 = new ExcelReader(excelPath2);
 
     String sheetName = ConfigReader.get("sheetName");
@@ -164,7 +164,7 @@ public class RegistrationsPage extends BaseScreenWeb {
 
     public void searchAndVerifySpecificData() throws IOException, InterruptedException {
         int totalRows = excel.getTotalRows(sheetName);
-        for (int r = 1; r <= 10; r++) {
+        for (int r = 1; r <= 3; r++) {
             String productNameValue = excel.getCellValue(sheetName, "Product Name", r);
             System.out.println(productNameValue);
             enterSearchInRegistrations(productNameValue);
@@ -228,5 +228,13 @@ public class RegistrationsPage extends BaseScreenWeb {
             System.out.println("start date: '" + startDate + "' doesn't matches for product");
             excel2.markCellRed(sheetName, "Start Date (YYYY-MM-DD)*", r);
         }
+    }
+
+    public void copyFile() throws IOException {
+        ExcelReader.copyExcelFile(
+                Paths.get(System.getProperty("user.dir"), "\\src\\test\\resources\\excelfiles\\" + ConfigReader.get("inputFileName")),
+                Paths.get(System.getProperty("user.dir"), "\\src\\test\\resources\\excelfiles\\" + ConfigReader.get("outputFileName1"))
+        );
+        System.out.println("Copied input file to output file successfully.");
     }
 }

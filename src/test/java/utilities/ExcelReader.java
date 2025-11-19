@@ -6,6 +6,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
 
@@ -211,4 +212,25 @@ public class ExcelReader {
         }
     }
 
+    /**
+     * Copies an existing Excel file to a new file.
+     * Creates the target directory automatically if missing.
+     *
+     * @param source source Excel file path
+     * @param target new Excel file path to create
+     */
+    public static void copyExcelFile(Path source, Path target) throws IOException {
+        // Ensure target directory exists
+        if (target.getParent() != null) {
+            Files.createDirectories(target.getParent());
+        }
+
+        try (
+                FileInputStream fis = new FileInputStream(source.toFile());
+                Workbook workbook = new XSSFWorkbook(fis);
+                FileOutputStream fos = new FileOutputStream(target.toFile())
+        ) {
+            workbook.write(fos);
+        }
+    }
 }

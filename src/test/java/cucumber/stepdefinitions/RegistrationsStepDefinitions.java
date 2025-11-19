@@ -35,6 +35,7 @@ public class RegistrationsStepDefinitions extends BaseSteps {
 
     @Then("user validates the registration details")
     public void userValidatesTheRegistrationDetails() throws IOException, InterruptedException {
+        registrationsPage.copyFile();
         registrationsPage.searchAndVerifySpecificData();
     }
 }
