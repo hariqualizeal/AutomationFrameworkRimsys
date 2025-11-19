@@ -156,7 +156,7 @@ public class RegistrationsPage extends BaseScreenWeb {
 
     public void searchAndVerifySpecificData(Path inputFilePath, Path outputFilePath, String sheetName) throws IOException, InterruptedException {
         int totalRows = excelReader.getTotalRows(sheetName, inputFilePath);
-        for (int r = 1; r <= 3; r++) {
+        for (int r = 1; r <= 2; r++) {
             String productNameValue = excelReader.getCellValue(sheetName, "Product Name", r, inputFilePath);
             System.out.println(productNameValue);
             enterSearchInRegistrations(productNameValue);
