@@ -17,12 +17,7 @@ public class RegistrationsPage extends BaseScreenWeb {
         super(driver);
     }
 
-    Path inputFilePath = Paths.get(System.getProperty("user.dir"), "\\src\\test\\resources\\excelfiles\\" + ConfigReader.get("inputFileName") + ".xlsx");
-    ExcelReader excelReaderInputFile = new ExcelReader();
-    Path outputFilePath1 = Paths.get(System.getProperty("user.dir"), "\\src\\test\\resources\\excelfiles\\" + ConfigReader.get("outputFileName1") + ".xlsx");
-    ExcelReader excelReaderOutputFile1 = new ExcelReader();
-
-    String sheetName = ConfigReader.get("sheetName");
+    ExcelReader excelReader = new ExcelReader();
 
     /**
      * Web Elements
@@ -159,71 +154,71 @@ public class RegistrationsPage extends BaseScreenWeb {
         driver.findElement(searchButtonRegistrations).clear();
     }
 
-    public void searchAndVerifySpecificData() throws IOException, InterruptedException {
-        int totalRows = excelReaderInputFile.getTotalRows(sheetName, inputFilePath);
+    public void searchAndVerifySpecificData(Path inputFilePath, Path outputFilePath, String sheetName) throws IOException, InterruptedException {
+        int totalRows = excelReader.getTotalRows(sheetName, inputFilePath);
         for (int r = 1; r <= 3; r++) {
-            String productNameValue = excelReaderInputFile.getCellValue(sheetName, "Product Name", r, inputFilePath);
+            String productNameValue = excelReader.getCellValue(sheetName, "Product Name", r, inputFilePath);
             System.out.println(productNameValue);
             enterSearchInRegistrations(productNameValue);
             boolean ok = verifyProduct(productNameValue);
             if (ok) {
-                excelReaderOutputFile1.markCellGreen(sheetName, "Product Name", r, outputFilePath1);
+                excelReader.markCellGreen(sheetName, "Product Name", r, outputFilePath);
                 waitAndClick(getRegistrationNumber(productNameValue));
                 waitAndVerify(getRegistrationName);
-                validateRegistrationName(r);
-                validateOwnerName(r);
-                validateRegistrationStatus(r);
-                validateStartDate(r);
+                validateRegistrationName(r, inputFilePath, outputFilePath, sheetName);
+                validateOwnerName(r, inputFilePath, outputFilePath, sheetName);
+                validateRegistrationStatus(r, inputFilePath, outputFilePath, sheetName);
+                validateStartDate(r, inputFilePath, outputFilePath, sheetName);
                 waitAndClick(getRegistrationsLink);
                 clearsearchBox();
             } else {
-                excelReaderOutputFile1.markCellRed(sheetName, "Product Name", r, outputFilePath1);
+                excelReader.markCellRed(sheetName, "Product Name", r, outputFilePath);
                 clearsearchBox();
             }
         }
     }
 
-    public void validateRegistrationName(int r) throws IOException {
-        String registrationNameValue = excelReaderInputFile.getCellValue(sheetName, "Registration Name*", r, inputFilePath);
+    public void validateRegistrationName(int r, Path inputFilePath, Path outputFilePath1, String sheetName) throws IOException {
+        String registrationNameValue = excelReader.getCellValue(sheetName, "Registration Name*", r, inputFilePath);
         if (driver.findElement(getRegistrationName).getAttribute("value").equals(registrationNameValue)) {
             System.out.println("Registration Name: '" + registrationNameValue + "' matches for product");
-            excelReaderOutputFile1.markCellGreen(sheetName, "Registration Name*", r, outputFilePath1);
+            excelReader.markCellGreen(sheetName, "Registration Name*", r, outputFilePath1);
         } else {
             System.out.println("Registration Name: '" + registrationNameValue + "' doesn't matches for product");
-            excelReaderOutputFile1.markCellRed(sheetName, "Registration Name*", r, outputFilePath1);
+            excelReader.markCellRed(sheetName, "Registration Name*", r, outputFilePath1);
         }
     }
 
-    public void validateOwnerName(int r) throws IOException {
-        String ownerNameValue = excelReaderInputFile.getCellValue(sheetName, "Owner*", r, inputFilePath);
+    public void validateOwnerName(int r, Path inputFilePath, Path outputFilePath1, String sheetName) throws IOException {
+        String ownerNameValue = excelReader.getCellValue(sheetName, "Owner*", r, inputFilePath);
         if (driver.findElement(getOwnerName).getText().equals(ownerNameValue)) {
             System.out.println("Owner Name: '" + ownerNameValue + "' matches for product");
-            excelReaderOutputFile1.markCellGreen(sheetName, "Owner*", r, outputFilePath1);
+            excelReader.markCellGreen(sheetName, "Owner*", r, outputFilePath1);
         } else {
             System.out.println("Owner Name: '" + ownerNameValue + "' doesnt matches for product");
-            excelReaderOutputFile1.markCellRed(sheetName, "Owner*", r, outputFilePath1);
+            excelReader.markCellRed(sheetName, "Owner*", r, outputFilePath1);
         }
     }
 
-    public void validateRegistrationStatus(int r) throws IOException {
-        String registrationStatus = excelReaderInputFile.getCellValue(sheetName, "Registration Status", r, inputFilePath);
+    public void validateRegistrationStatus(int r, Path inputFilePath, Path outputFilePath1, String sheetName) throws IOException {
+        String registrationStatus = excelReader.getCellValue(sheetName, "Registration Status", r, inputFilePath);
         if (driver.findElement(getRegistrationStatus).getText().equals(registrationStatus)) {
             System.out.println("Owner Name: '" + registrationStatus + "' matches for product");
-            excelReaderOutputFile1.markCellGreen(sheetName, "Registration Status", r, outputFilePath1);
+            excelReader.markCellGreen(sheetName, "Registration Status", r, outputFilePath1);
         } else {
             System.out.println("Owner Name: '" + registrationStatus + "' doesnt matches for product");
-            excelReaderOutputFile1.markCellRed(sheetName, "Registration Status", r, outputFilePath1);
+            excelReader.markCellRed(sheetName, "Registration Status", r, outputFilePath1);
         }
     }
 
-    public void validateStartDate(int r) throws IOException {
-        String startDate = excelReaderInputFile.getCellValue(sheetName, "Start Date (YYYY-MM-DD)*", r, inputFilePath);
+    public void validateStartDate(int r, Path inputFilePath, Path outputFilePath1, String sheetName) throws IOException {
+        String startDate = excelReader.getCellValue(sheetName, "Start Date (YYYY-MM-DD)*", r, inputFilePath);
         if (driver.findElement(getStartDate).getAttribute("value").equals(startDate)) {
             System.out.println("start date: '" + startDate + "' matches for product");
-            excelReaderOutputFile1.markCellGreen(sheetName, "Start Date (YYYY-MM-DD)*", r, outputFilePath1);
+            excelReader.markCellGreen(sheetName, "Start Date (YYYY-MM-DD)*", r, outputFilePath1);
         } else {
             System.out.println("start date: '" + startDate + "' doesn't matches for product");
-            excelReaderOutputFile1.markCellRed(sheetName, "Start Date (YYYY-MM-DD)*", r, outputFilePath1);
+            excelReader.markCellRed(sheetName, "Start Date (YYYY-MM-DD)*", r, outputFilePath1);
         }
     }
 
