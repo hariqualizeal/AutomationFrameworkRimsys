@@ -27,9 +27,7 @@ public class RegistrationsStepDefinitions extends BaseSteps {
         registrationsPage.clickSignInButton();
         registrationsPage.clickYesButton();
         registrationsPage.clickCompany(ConfigReader.get("companyName"));
-        Thread.sleep(90000);
         registrationsPage.clickSearchButton();
-        Thread.sleep(90000);
         registrationsPage.clickAuthTab();
         registrationsPage.enterLoginReason();
         registrationsPage.clickAdministratorButton();

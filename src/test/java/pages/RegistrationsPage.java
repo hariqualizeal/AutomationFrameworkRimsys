@@ -91,19 +91,43 @@ public class RegistrationsPage extends BaseScreenWeb {
         waitAndClick(yesButton);
     }
 
-    public void clickCompany(String companyName) {
+    public void clickCompany(String companyName) throws InterruptedException {
+        if(!waitAndVerify(companyDiv(companyName))){
+            Thread.sleep(60000);
+            if(!waitAndVerify(companyDiv(companyName))){
+                Thread.sleep(60000);
+            }
+        }
         waitAndClick(companyDiv(companyName));
     }
 
     public void clickSearchButton() throws InterruptedException {
-                waitAndClick(searchButton);
+        if(!waitAndVerify(searchButton)){
+            Thread.sleep(60000);
+            if(!waitAndVerify(searchButton)){
+                Thread.sleep(60000);
+            }
+        }
+        waitAndClick(searchButton);
     }
 
     public void clickAuthTab() throws InterruptedException {
+        if(!waitAndVerify(authTab)){
+            Thread.sleep(60000);
+            if(!waitAndVerify(authTab)){
+                Thread.sleep(60000);
+            }
+        }
         waitAndClick(authTab);
     }
 
-    public void enterLoginReason() {
+    public void enterLoginReason() throws InterruptedException {
+        if(!waitAndVerify(loginReasonInputBox)){
+            Thread.sleep(60000);
+            if(!waitAndVerify(loginReasonInputBox)){
+                Thread.sleep(60000);
+            }
+        }
         waitAndSendKeys(loginReasonInputBox, "test");
     }
 
