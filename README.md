@@ -24,6 +24,7 @@ src
     │   └── utilities
     └── resources
         └── features
+        └── excelfiles
         └── testngxml
 pom.xml
 README.md
@@ -43,16 +44,20 @@ README.md
 
 ## ▶ Running Tests Locally
 
+### ✅ Place excel files in resources->excelfiles folder
 
 ### ✅ Execute Tests
-| Command                     | Description                                          |
-|-----------------------------|------------------------------------------------------|
-| `mvn clean test -PValidate` | Run web tests locally on browser                     |
+| Command                             | Description                                  |
+|-------------------------------------|----------------------------------------------|
+| `mvn clean test -PValidate`         | Run web tests locally on browser             |
+| `mvn clean test -PValidateParallel` | Run web tests locally on browser in parallel |
 
 ### ✅ Update Cucumber Test Runner
 - Modify tags in `src/test/java/cucumber/testRunners/*Runner.java`
 - Update thread count in TestNG XML (`testng/testng*.xml`)
 
+### ✅ Test reports
+- `target/excel-file-reports/`
 ---
 
 ## 🚀 Jenkins CI/CD Setup

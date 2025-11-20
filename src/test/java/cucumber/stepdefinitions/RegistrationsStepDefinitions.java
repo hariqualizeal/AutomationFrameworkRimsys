@@ -26,29 +26,24 @@ public class RegistrationsStepDefinitions extends BaseSteps {
         registrationsPage.enterPassword(ConfigReader.get("password"));
         registrationsPage.clickSignInButton();
         registrationsPage.clickYesButton();
+//        Thread.sleep(60000);
         registrationsPage.clickCompany(ConfigReader.get("companyName"));
+//        Thread.sleep(60000);
         registrationsPage.clickSearchButton();
+//        Thread.sleep(60000);
         registrationsPage.clickAuthTab();
+//        Thread.sleep(60000);
         registrationsPage.enterLoginReason();
         registrationsPage.clickAdministratorButton();
         registrationsPage.clickGridIcon();
         registrationsPage.clickAllRegistrationsLink();
     }
 
-    @Then("user validates the registration details")
-    public void userValidatesTheRegistrationDetails() throws IOException, InterruptedException {
-        Path inputFilePath = Paths.get(System.getProperty("user.dir"), "\\src\\test\\resources\\excelfiles\\" + ConfigReader.get("inputFileName") + ".xlsx");
-        Path outputFilePath = Paths.get(System.getProperty("user.dir"), "\\src\\test\\resources\\excelfiles\\" + ConfigReader.get("outputFileName1") + ".xlsx");
-        registrationsPage.copyFile(inputFilePath,outputFilePath);
-        String sheetName = ConfigReader.get("sheetName");
-//        registrationsPage.searchAndVerifySpecificData(inputFilePath, outputFilePath, sheetName);
-    }
-
     @Then("user validates the registration details {string} {string}")
     public void userValidatesTheRegistrationDetails(String fromRowNumber, String toRowNumber) throws IOException, InterruptedException {
         String rows = fromRowNumber + "-" + toRowNumber;
         Path inputFilePath = Paths.get(System.getProperty("user.dir"), "\\src\\test\\resources\\excelfiles\\" + ConfigReader.get("inputFileName") + ".xlsx");
-        Path outputFilePath = Paths.get(System.getProperty("user.dir"), "\\src\\test\\resources\\excelfiles\\" + ConfigReader.get("inputFileName") +"Row"+rows+ ".xlsx");
+        Path outputFilePath = Paths.get(System.getProperty("user.dir"), "\\target\\excel-file-reports\\" + ConfigReader.get("inputFileName") +"Row"+rows+ ".xlsx");
         registrationsPage.copyFile(inputFilePath,outputFilePath);
         String sheetName = ConfigReader.get("sheetName");
         registrationsPage.searchAndVerifySpecificData(inputFilePath, outputFilePath, sheetName,Integer.parseInt(fromRowNumber),Integer.parseInt(toRowNumber));
