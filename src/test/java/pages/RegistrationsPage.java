@@ -49,11 +49,12 @@ public class RegistrationsPage extends BaseScreenWeb {
     }
 
     By getRegistrationName = By.xpath("//input[@aria-label='Name' and @type='text']");
-
     By getOwnerName = By.xpath("//label[text()='Owner']/../..//span[@class=\"flex items-center\"]");
     By getRegistrationStatus = By.xpath("//label[text()='Lifecycle Stage']/../..//span[@class=\"flex items-center\"]");
     By getStartDate = By.xpath("//label[text()='Start Date']/../..//input[@placeholder=\"YYYY-MM-DD\" and @type=\"text\"]");
     By getRegistrationsLink = By.xpath("//a[contains(text(),'Registrations')]");
+    By getProducts = By.xpath("//a[contains(text(),'Products')]");
+    By getProductCatalogNumber = By.xpath("(//td[@class=\"px-6 whitespace-no-wrap text-sm leading-5 font-medium py-4\"])[7]");
 
     /**
      * Actions
@@ -154,7 +155,7 @@ public class RegistrationsPage extends BaseScreenWeb {
         driver.findElement(searchButtonRegistrations).clear();
     }
 
-    public void searchAndVerifySpecificData(Path inputFilePath, Path outputFilePath, String sheetName,int fromRowNumber, int toRowNumber) throws IOException, InterruptedException {
+    public void searchAndVerifySpecificData(Path inputFilePath, Path outputFilePath, String sheetName, int fromRowNumber, int toRowNumber) throws IOException, InterruptedException {
         int totalRows = excelReader.getTotalRows(sheetName, inputFilePath);
         for (int r = fromRowNumber; r <= toRowNumber; r++) {
             String productNameValue = excelReader.getCellValue(sheetName, "Product Name", r, inputFilePath);
@@ -169,6 +170,8 @@ public class RegistrationsPage extends BaseScreenWeb {
                 validateOwnerName(r, inputFilePath, outputFilePath, sheetName);
                 validateRegistrationStatus(r, inputFilePath, outputFilePath, sheetName);
                 validateStartDate(r, inputFilePath, outputFilePath, sheetName);
+                waitAndClick(getProducts);
+                validateProductCatalogNumber(r, inputFilePath, outputFilePath, sheetName);
                 waitAndClick(getRegistrationsLink);
                 clearsearchBox();
             } else {
@@ -219,6 +222,18 @@ public class RegistrationsPage extends BaseScreenWeb {
         } else {
             System.out.println("start date: '" + startDate + "' doesn't matches for product");
             excelReader.markCellRed(sheetName, "Start Date (YYYY-MM-DD)*", r, outputFilePath1);
+        }
+    }
+
+    public void validateProductCatalogNumber(int r, Path inputFilePath, Path outputFilePath1, String sheetName) throws IOException, InterruptedException {
+        String productCatalogNumber = excelReader.getCellValue(sheetName, "Product Catalog Number", r, inputFilePath);
+        Thread.sleep(10000);
+        if (waitAndGetText(getProductCatalogNumber).equals(productCatalogNumber)) {
+            System.out.println("Product Catalog Number: '" + productCatalogNumber + "' matches for product");
+            excelReader.markCellGreen(sheetName, "Product Catalog Number", r, outputFilePath1);
+        } else {
+            System.out.println("Product Catalog Number: '" + productCatalogNumber + "' doesn't matches for product");
+            excelReader.markCellRed(sheetName, "Product Catalog Number", r, outputFilePath1);
         }
     }
 
