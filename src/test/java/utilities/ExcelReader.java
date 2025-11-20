@@ -12,16 +12,10 @@ import java.util.*;
 
 /**
  * ExcelReader utility with read helpers and methods to mark cells red/green.
- *
+ * <p>
  * Requirements: Apache POI (poi and poi-ooxml) on the classpath.
  */
 public class ExcelReader {
-
-    private final Path filePath;
-
-    public ExcelReader(Path filePath) {
-        this.filePath = filePath;
-    }
 
     // Use workbook provided by caller (does NOT open/close the workbook)
     private Sheet getSheet(Workbook workbook, String sheetName) {
@@ -45,8 +39,10 @@ public class ExcelReader {
         return headerMap;
     }
 
-    /** ✔ Get a single cell value using column header & row number. */
-    public String getCellValue(String sheetName, String columnHeader, int rowNumber) throws IOException {
+    /**
+     * ✔ Get a single cell value using column header & row number.
+     */
+    public String getCellValue(String sheetName, String columnHeader, int rowNumber, Path filePath) throws IOException {
         try (FileInputStream fis = new FileInputStream(filePath.toFile());
              Workbook workbook = new XSSFWorkbook(fis)) {
 
@@ -66,8 +62,8 @@ public class ExcelReader {
         }
     }
 
-    /** ✔ Returns entire row as Map<Header, Value>. */
-    public Map<String, String> getRowData(String sheetName, int rowNumber) throws IOException {
+    //Returns entire row as Map<Header, Value>
+    public Map<String, String> getRowData(String sheetName, int rowNumber, Path filePath) throws IOException {
         try (FileInputStream fis = new FileInputStream(filePath.toFile());
              Workbook workbook = new XSSFWorkbook(fis)) {
 
@@ -86,8 +82,8 @@ public class ExcelReader {
         }
     }
 
-    /** ✔ Returns list of values in a specific column. */
-    public List<String> getColumnData(String sheetName, String columnHeader) throws IOException {
+    //Returns list of values in a specific column.
+    public List<String> getColumnData(String sheetName, String columnHeader, Path filePath) throws IOException {
         try (FileInputStream fis = new FileInputStream(filePath.toFile());
              Workbook workbook = new XSSFWorkbook(fis)) {
 
@@ -126,7 +122,7 @@ public class ExcelReader {
      * @param rowNumber    - row index (0-based). NOTE: header row is expected at row 0.
      * @throws IOException if file IO fails
      */
-    public void markCellRed(String sheetName, String columnHeader, int rowNumber) throws IOException {
+    public void markCellRed(String sheetName, String columnHeader, int rowNumber, Path filePath) throws IOException {
         try (FileInputStream fis = new FileInputStream(filePath.toFile());
              Workbook workbook = new XSSFWorkbook(fis)) {
 
@@ -161,7 +157,7 @@ public class ExcelReader {
      * MARK CELL GREEN
      * Sets the cell's background fill to solid GREEN and writes changes back to the file.
      */
-    public void markCellGreen(String sheetName, String columnHeader, int rowNumber) throws IOException {
+    public void markCellGreen(String sheetName, String columnHeader, int rowNumber, Path filePath) throws IOException {
         try (FileInputStream fis = new FileInputStream(filePath.toFile());
              Workbook workbook = new XSSFWorkbook(fis)) {
 
@@ -192,7 +188,7 @@ public class ExcelReader {
         }
     }
 
-    public int getTotalRows(String sheetName) throws IOException {
+    public int getTotalRows(String sheetName, Path filePath) throws IOException {
         try (FileInputStream fis = new FileInputStream(filePath.toFile());
              Workbook workbook = new XSSFWorkbook(fis)) {
 

@@ -21,7 +21,7 @@ import java.net.URL;
  */
 @CucumberOptions(
         monochrome = true,
-        tags = "@Registrations",
+        tags = "@Registrations3",
         features = "src/test/resources/features",
         glue = "cucumber.stepdefinitions",
         publish = false,
@@ -29,7 +29,7 @@ import java.net.URL;
                 "html:target/cucumber-reports/CucumberReport2.html",
                 "json:target/cucumber-reports/cucumber-report2.json"}
 )
-public class TestNGSequentialRunnerWeb {
+public class TestNGRunnerWeb3 {
 
   private TestNGCucumberRunner testNGCucumberRunner;
   private final DesiredCapabilitiesUtil desiredCapabilitiesUtil = new DesiredCapabilitiesUtil();

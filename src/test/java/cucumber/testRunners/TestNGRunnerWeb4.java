@@ -21,7 +21,7 @@ import java.net.URL;
  */
 @CucumberOptions(
         monochrome = true,
-        tags = "@MyntraScenario",
+        tags = "@Registrations4",
         features = "src/test/resources/features",
         glue = "cucumber.stepdefinitions",
         publish = false,
@@ -29,7 +29,7 @@ import java.net.URL;
                 "html:target/cucumber-reports/CucumberReport2.html",
                 "json:target/cucumber-reports/cucumber-report2.json"}
 )
-public class TestNGParallelRunner1Web {
+public class TestNGRunnerWeb4 {
 
   private TestNGCucumberRunner testNGCucumberRunner;
   private final DesiredCapabilitiesUtil desiredCapabilitiesUtil = new DesiredCapabilitiesUtil();

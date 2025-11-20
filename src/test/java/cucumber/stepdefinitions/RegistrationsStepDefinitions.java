@@ -7,6 +7,8 @@ import utilities.ConfigReader;
 import utilities.ThreadLocalDriver;
 
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class RegistrationsStepDefinitions extends BaseSteps {
 
@@ -35,7 +37,20 @@ public class RegistrationsStepDefinitions extends BaseSteps {
 
     @Then("user validates the registration details")
     public void userValidatesTheRegistrationDetails() throws IOException, InterruptedException {
-        registrationsPage.copyFile();
-        registrationsPage.searchAndVerifySpecificData();
+        Path inputFilePath = Paths.get(System.getProperty("user.dir"), "\\src\\test\\resources\\excelfiles\\" + ConfigReader.get("inputFileName") + ".xlsx");
+        Path outputFilePath = Paths.get(System.getProperty("user.dir"), "\\src\\test\\resources\\excelfiles\\" + ConfigReader.get("outputFileName1") + ".xlsx");
+        registrationsPage.copyFile(inputFilePath,outputFilePath);
+        String sheetName = ConfigReader.get("sheetName");
+//        registrationsPage.searchAndVerifySpecificData(inputFilePath, outputFilePath, sheetName);
+    }
+
+    @Then("user validates the registration details {string} {string}")
+    public void userValidatesTheRegistrationDetails(String fromRowNumber, String toRowNumber) throws IOException, InterruptedException {
+        String rows = fromRowNumber + "-" + toRowNumber;
+        Path inputFilePath = Paths.get(System.getProperty("user.dir"), "\\src\\test\\resources\\excelfiles\\" + ConfigReader.get("inputFileName") + ".xlsx");
+        Path outputFilePath = Paths.get(System.getProperty("user.dir"), "\\src\\test\\resources\\excelfiles\\" + ConfigReader.get("inputFileName") +"Row"+rows+ ".xlsx");
+        registrationsPage.copyFile(inputFilePath,outputFilePath);
+        String sheetName = ConfigReader.get("sheetName");
+        registrationsPage.searchAndVerifySpecificData(inputFilePath, outputFilePath, sheetName,Integer.parseInt(fromRowNumber),Integer.parseInt(toRowNumber));
     }
 }
