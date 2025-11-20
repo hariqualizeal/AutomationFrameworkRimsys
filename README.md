@@ -7,7 +7,6 @@
 ## ✅ Features
 - ⚡ **Parallel execution** using TestNG
 - 🧪 **Cucumber BDD with TestNG runners**
-- ☁️ **Cloud Execution** support (BrowserStack)
 - 📊 **Reporting Support** (Extent Reports / Cucumber HTML)
 
 ---
@@ -44,11 +43,14 @@ README.md
 
 ## ▶ Running Tests Locally
 
-### ✅ Place excel files in resources->excelfiles folder
+### ✅ 
+- Place excel files in resources->excelfiles folder
 
-### ✅ Update Configuration in `config.properties`
+### ✅ 
+- Update Configuration in `config.properties`
 
-### ✅ Update row numbers in feature file examples section
+### ✅ 
+- Update row numbers in feature file examples section
 
 ### ✅ Execute Tests
 | Command                             | Description                                  |
