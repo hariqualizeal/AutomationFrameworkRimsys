@@ -29,7 +29,7 @@
     </build>
     <profiles>
         <profile>
-            <id>ParallelLocalWeb</id>
+            <id>ValidateParallel</id>
             <build>
                 <plugins>
                     <plugin>
