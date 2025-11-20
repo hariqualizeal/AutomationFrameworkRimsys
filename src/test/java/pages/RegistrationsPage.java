@@ -95,11 +95,11 @@ public class RegistrationsPage extends BaseScreenWeb {
         waitAndClick(companyDiv(companyName));
     }
 
-    public void clickSearchButton() {
-        waitAndClick(searchButton);
+    public void clickSearchButton() throws InterruptedException {
+                waitAndClick(searchButton);
     }
 
-    public void clickAuthTab() {
+    public void clickAuthTab() throws InterruptedException {
         waitAndClick(authTab);
     }
 
@@ -154,9 +154,9 @@ public class RegistrationsPage extends BaseScreenWeb {
         driver.findElement(searchButtonRegistrations).clear();
     }
 
-    public void searchAndVerifySpecificData(Path inputFilePath, Path outputFilePath, String sheetName) throws IOException, InterruptedException {
+    public void searchAndVerifySpecificData(Path inputFilePath, Path outputFilePath, String sheetName,int fromRowNumber, int toRowNumber) throws IOException, InterruptedException {
         int totalRows = excelReader.getTotalRows(sheetName, inputFilePath);
-        for (int r = 1; r <= 2; r++) {
+        for (int r = fromRowNumber; r <= toRowNumber; r++) {
             String productNameValue = excelReader.getCellValue(sheetName, "Product Name", r, inputFilePath);
             System.out.println(productNameValue);
             enterSearchInRegistrations(productNameValue);
@@ -222,11 +222,8 @@ public class RegistrationsPage extends BaseScreenWeb {
         }
     }
 
-    public void copyFile() throws IOException {
-        ExcelReader.copyExcelFile(
-                Paths.get(System.getProperty("user.dir"), "\\src\\test\\resources\\excelfiles\\" + ConfigReader.get("inputFileName") + ".xlsx"),
-                Paths.get(System.getProperty("user.dir"), "\\src\\test\\resources\\excelfiles\\" + ConfigReader.get("outputFileName1") + ".xlsx")
-        );
+    public void copyFile(Path inputFilePath, Path outputFilePath) throws IOException {
+        ExcelReader.copyExcelFile(inputFilePath, outputFilePath);
         System.out.println("Copied input file to output file successfully.");
     }
 }

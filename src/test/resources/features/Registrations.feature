@@ -1,8 +1,41 @@
 Feature: Validate registrations
 
-  @Registrations
-  Scenario: Validate registrations
+  @Registrations1
+  Scenario Outline: Validate registrations
     Given user is navigated to registration page
-    # in below then statement, pass row numbers and use it in file name by appending row numbers
-    #delete parallel runner test runners just rename to runner dont  use paralle/seq in runner name
-    Then user validates the registration details
+    Then user validates the registration details "<from row>" "<to row>"
+    Examples:
+      | from row | to row |
+      | 1        | 5     |
+
+  @Registrations2
+  Scenario Outline: Validate registrations
+    Given user is navigated to registration page
+    Then user validates the registration details "<from row>" "<to row>"
+    Examples:
+      | from row | to row |
+      | 6        | 10     |
+
+  @Registrations3
+  Scenario Outline: Validate registrations
+    Given user is navigated to registration page
+    Then user validates the registration details "<from row>" "<to row>"
+    Examples:
+      | from row | to row |
+      | 21        | 30     |
+
+  @Registrations4
+  Scenario Outline: Validate registrations
+    Given user is navigated to registration page
+    Then user validates the registration details "<from row>" "<to row>"
+    Examples:
+      | from row | to row |
+      | 31        | 40     |
+
+  @Registrations5
+  Scenario Outline: Validate registrations
+    Given user is navigated to registration page
+    Then user validates the registration details "<from row>" "<to row>"
+    Examples:
+      | from row | to row |
+      | 41        | 50     |

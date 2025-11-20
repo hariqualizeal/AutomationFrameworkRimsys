@@ -27,7 +27,9 @@ public class RegistrationsStepDefinitions extends BaseSteps {
         registrationsPage.clickSignInButton();
         registrationsPage.clickYesButton();
         registrationsPage.clickCompany(ConfigReader.get("companyName"));
+        Thread.sleep(90000);
         registrationsPage.clickSearchButton();
+        Thread.sleep(90000);
         registrationsPage.clickAuthTab();
         registrationsPage.enterLoginReason();
         registrationsPage.clickAdministratorButton();
@@ -37,10 +39,20 @@ public class RegistrationsStepDefinitions extends BaseSteps {
 
     @Then("user validates the registration details")
     public void userValidatesTheRegistrationDetails() throws IOException, InterruptedException {
-        registrationsPage.copyFile();
         Path inputFilePath = Paths.get(System.getProperty("user.dir"), "\\src\\test\\resources\\excelfiles\\" + ConfigReader.get("inputFileName") + ".xlsx");
         Path outputFilePath = Paths.get(System.getProperty("user.dir"), "\\src\\test\\resources\\excelfiles\\" + ConfigReader.get("outputFileName1") + ".xlsx");
+        registrationsPage.copyFile(inputFilePath,outputFilePath);
         String sheetName = ConfigReader.get("sheetName");
-        registrationsPage.searchAndVerifySpecificData(inputFilePath, outputFilePath, sheetName);
+//        registrationsPage.searchAndVerifySpecificData(inputFilePath, outputFilePath, sheetName);
+    }
+
+    @Then("user validates the registration details {string} {string}")
+    public void userValidatesTheRegistrationDetails(String fromRowNumber, String toRowNumber) throws IOException, InterruptedException {
+        String rows = fromRowNumber + "-" + toRowNumber;
+        Path inputFilePath = Paths.get(System.getProperty("user.dir"), "\\src\\test\\resources\\excelfiles\\" + ConfigReader.get("inputFileName") + ".xlsx");
+        Path outputFilePath = Paths.get(System.getProperty("user.dir"), "\\src\\test\\resources\\excelfiles\\" + ConfigReader.get("inputFileName") +"Row"+rows+ ".xlsx");
+        registrationsPage.copyFile(inputFilePath,outputFilePath);
+        String sheetName = ConfigReader.get("sheetName");
+        registrationsPage.searchAndVerifySpecificData(inputFilePath, outputFilePath, sheetName,Integer.parseInt(fromRowNumber),Integer.parseInt(toRowNumber));
     }
 }
