@@ -46,6 +46,10 @@ README.md
 
 ### ✅ Place excel files in resources->excelfiles folder
 
+### ✅ Update Configuration in `config.properties`
+
+### ✅ Update row numbers in feature file examples section
+
 ### ✅ Execute Tests
 | Command                             | Description                                  |
 |-------------------------------------|----------------------------------------------|
