@@ -57,7 +57,7 @@ README.md
 - Update thread count in TestNG XML (`testng/testng*.xml`)
 
 ### ✅ Test reports
-- `target/excel-files/`
+- `target/excel-file-reports/`
 ---
 
 ## 🚀 Jenkins CI/CD Setup
