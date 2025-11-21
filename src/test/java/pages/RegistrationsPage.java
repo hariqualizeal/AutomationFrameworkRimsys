@@ -181,36 +181,36 @@ public class RegistrationsPage extends BaseScreenWeb {
         }
     }
 
-    public void validateRegistrationName(int r, Path inputFilePath, Path outputFilePath1, String sheetName) throws IOException {
+    public void validateRegistrationName(int r, Path inputFilePath, Path outputFilePath, String sheetName) throws IOException {
         String registrationNameValue = excelReader.getCellValue(sheetName, "Registration Name*", r, inputFilePath);
         if (driver.findElement(getRegistrationName).getAttribute("value").equals(registrationNameValue)) {
             System.out.println("Registration Name: '" + registrationNameValue + "' matches for product");
-            excelReader.markCellGreen(sheetName, "Registration Name*", r, outputFilePath1);
+            excelReader.markCellGreen(sheetName, "Registration Name*", r, outputFilePath);
         } else {
             System.out.println("Registration Name: '" + registrationNameValue + "' doesn't matches for product");
-            excelReader.markCellRed(sheetName, "Registration Name*", r, outputFilePath1);
+            excelReader.markCellRed(sheetName, "Registration Name*", r, outputFilePath);
         }
     }
 
-    public void validateOwnerName(int r, Path inputFilePath, Path outputFilePath1, String sheetName) throws IOException {
+    public void validateOwnerName(int r, Path inputFilePath, Path outputFilePath, String sheetName) throws IOException {
         String ownerNameValue = excelReader.getCellValue(sheetName, "Owner*", r, inputFilePath);
         if (driver.findElement(getOwnerName).getText().equals(ownerNameValue)) {
             System.out.println("Owner Name: '" + ownerNameValue + "' matches for product");
-            excelReader.markCellGreen(sheetName, "Owner*", r, outputFilePath1);
+            excelReader.markCellGreen(sheetName, "Owner*", r, outputFilePath);
         } else {
             System.out.println("Owner Name: '" + ownerNameValue + "' doesnt matches for product");
-            excelReader.markCellRed(sheetName, "Owner*", r, outputFilePath1);
+            excelReader.markCellRed(sheetName, "Owner*", r, outputFilePath);
         }
     }
 
-    public void validateRegistrationStatus(int r, Path inputFilePath, Path outputFilePath1, String sheetName) throws IOException {
+    public void validateRegistrationStatus(int r, Path inputFilePath, Path outputFilePath, String sheetName) throws IOException {
         String registrationStatus = excelReader.getCellValue(sheetName, "Registration Status", r, inputFilePath);
         if (driver.findElement(getRegistrationStatus).getText().equals(registrationStatus)) {
             System.out.println("Owner Name: '" + registrationStatus + "' matches for product");
-            excelReader.markCellGreen(sheetName, "Registration Status", r, outputFilePath1);
+            excelReader.markCellGreen(sheetName, "Registration Status", r, outputFilePath);
         } else {
             System.out.println("Owner Name: '" + registrationStatus + "' doesnt matches for product");
-            excelReader.markCellRed(sheetName, "Registration Status", r, outputFilePath1);
+            excelReader.markCellRed(sheetName, "Registration Status", r, outputFilePath);
         }
     }
 
@@ -225,15 +225,15 @@ public class RegistrationsPage extends BaseScreenWeb {
         }
     }
 
-    public void validateProductCatalogNumber(int r, Path inputFilePath, Path outputFilePath1, String sheetName) throws IOException, InterruptedException {
+    public void validateProductCatalogNumber(int r, Path inputFilePath, Path outputFilePath, String sheetName) throws IOException, InterruptedException {
         String productCatalogNumber = excelReader.getCellValue(sheetName, "Product Catalog Number", r, inputFilePath);
         Thread.sleep(10000);
         if (waitAndGetText(getProductCatalogNumber).equals(productCatalogNumber)) {
             System.out.println("Product Catalog Number: '" + productCatalogNumber + "' matches for product");
-            excelReader.markCellGreen(sheetName, "Product Catalog Number", r, outputFilePath1);
+            excelReader.markCellGreen(sheetName, "Product Catalog Number", r, outputFilePath);
         } else {
             System.out.println("Product Catalog Number: '" + productCatalogNumber + "' doesn't matches for product");
-            excelReader.markCellRed(sheetName, "Product Catalog Number", r, outputFilePath1);
+            excelReader.markCellRed(sheetName, "Product Catalog Number", r, outputFilePath);
         }
     }
 

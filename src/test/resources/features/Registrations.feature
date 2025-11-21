@@ -6,7 +6,7 @@ Feature: Validate registrations
     Then user validates the registration details "<from row>" "<to row>"
     Examples:
       | from row | to row |
-      | 1        | 5     |
+      | 1        | 10     |
 
   @Registrations2
   Scenario Outline: Validate registrations
@@ -14,7 +14,7 @@ Feature: Validate registrations
     Then user validates the registration details "<from row>" "<to row>"
     Examples:
       | from row | to row |
-      | 6        | 10     |
+      | 11        | 20     |
 
   @Registrations3
   Scenario Outline: Validate registrations
