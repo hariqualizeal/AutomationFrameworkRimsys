@@ -43,9 +43,9 @@ public class RegistrationsStepDefinitions extends BaseSteps {
     public void userValidatesTheRegistrationDetails(String fromRowNumber, String toRowNumber) throws IOException, InterruptedException {
         String rows = fromRowNumber + "-" + toRowNumber;
         Path inputFilePath = Paths.get(System.getProperty("user.dir"), "\\src\\test\\resources\\excelfiles\\" + ConfigReader.get("inputFileName") + ".xlsx");
-        Path outputFilePath = Paths.get(System.getProperty("user.dir"), "\\target\\excel-file-reports\\" + ConfigReader.get("inputFileName") +"Row"+rows+ ".xlsx");
-        registrationsPage.copyFile(inputFilePath,outputFilePath);
+        Path outputFilePath = Paths.get(System.getProperty("user.dir"), "\\target\\excel-file-reports\\" + ConfigReader.get("inputFileName") + "Row" + rows + ".xlsx");
+        registrationsPage.copyFile(inputFilePath, outputFilePath);
         String sheetName = ConfigReader.get("sheetName");
-        registrationsPage.searchAndVerifySpecificData(inputFilePath, outputFilePath, sheetName,Integer.parseInt(fromRowNumber),Integer.parseInt(toRowNumber));
+        registrationsPage.searchAndVerifySpecificData(inputFilePath, outputFilePath, sheetName, Integer.parseInt(fromRowNumber), Integer.parseInt(toRowNumber));
     }
 }

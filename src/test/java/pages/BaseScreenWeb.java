@@ -30,6 +30,11 @@ public class BaseScreenWeb {
         System.out.println("Sent text '"+text+"' to element '" + by+ "'");
     }
 
+    protected String waitAndGetText(By by) {
+        System.out.println("getting text of element '" + by+ "'");
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(by)).getText();
+    }
+
     protected boolean waitAndVerify(By by) {
         System.out.println("Verifying visibility of element: '" + by+ "'");
         try {
