@@ -51,6 +51,8 @@ README.md
 
 ### ✅ 
 - Update row numbers in feature file examples section
+- Run this command
+```mvn clean test -PValidate```
 
 ### ✅ Execute Tests
 | Command                             | Description                                  |
